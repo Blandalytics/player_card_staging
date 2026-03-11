@@ -317,7 +317,7 @@ def name_chunk(pitcher_id,game_id,ax):
     ax.set(ylim=(0,1.3))
     ax.axis('off')
     sns.despine()
-    return f'Pitcher Performance: {x['gameDate']} {home_away} {opp_abbr}'
+    return f'STAGING -- Pitcher Performance: {x['gameDate']} {home_away} {opp_abbr} -- STAGING'
 
 def load_logo():
     # logo_loc = 'https://github.com/Blandalytics/PLV_viz/blob/main/data/PL-text-wht.png?raw=true'
