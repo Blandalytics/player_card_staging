@@ -1915,21 +1915,21 @@ def generate_chart(pitcher_id,game_id,game_df,game_group,szn_df,szn_comp,prev_se
                     zorder=10,
                     ax=ax2)
     
-    # Inner Strike zone
-    ax2.plot([-9.5/12,9.5/12], [1.5+2/3,1.5+2/3], color=pl_background, linewidth=3.5, alpha=alpha_val)
-    ax2.plot([-9.5/12,9.5/12], [1.5+4/3,1.5+4/3], color=pl_background, linewidth=3.5, alpha=alpha_val)
-    ax2.axvline(10/36, ymin=(sz_bot-y_bot+0.05)/(y_lim-1-y_bot), ymax=(sz_top-y_bot-0.05)/(y_lim-1-y_bot), color=pl_background, linewidth=3.5, alpha=alpha_val)
-    ax2.axvline(-10/36, ymin=(sz_bot-y_bot+0.05)/(y_lim-1-y_bot), ymax=(sz_top-y_bot-0.05)/(y_lim-1-y_bot), color=pl_background, linewidth=3.5, alpha=alpha_val)
-    ax2.plot([-10/12,10/12], [1.5+2/3,1.5+2/3], color=pl_white, linewidth=2, alpha=alpha_val,zorder=2)
-    ax2.plot([-10/12,10/12], [1.5+4/3,1.5+4/3], color=pl_white, linewidth=2, alpha=alpha_val,zorder=2)
-    ax2.axvline(10/36, ymin=(sz_bot-y_bot)/(y_lim-1-y_bot), ymax=(sz_top-y_bot-0.025)/(y_lim-1-y_bot), color=pl_white, linewidth=3, alpha=alpha_val,zorder=2)
-    ax2.axvline(-10/36, ymin=(sz_bot-y_bot)/(y_lim-1-y_bot), ymax=(sz_top-y_bot-0.025)/(y_lim-1-y_bot), color=pl_white, linewidth=3, alpha=alpha_val,zorder=2)
+     # Inner Strike zone
+    ax2.plot([-8/12,8/12], [sz_bot+sz_height_chunk,sz_bot+sz_height_chunk], color=pl_background, linewidth=3.5, alpha=alpha_val)
+    ax2.plot([-8/12,8/12], [sz_bot+2*sz_height_chunk,sz_bot+2*sz_height_chunk], color=pl_background, linewidth=3.5, alpha=alpha_val)
+    ax2.axvline(8.5/36, ymin=(sz_bot-y_bot+0.05)/(y_lim-1-y_bot), ymax=(sz_top-y_bot-0.05)/(y_lim-1-y_bot), color=pl_background, linewidth=3.5, alpha=alpha_val)
+    ax2.axvline(-8.5/36, ymin=(sz_bot-y_bot+0.05)/(y_lim-1-y_bot), ymax=(sz_top-y_bot-0.05)/(y_lim-1-y_bot), color=pl_background, linewidth=3.5, alpha=alpha_val)
+    ax2.plot([-8.5/12,8.5/12], [sz_bot+sz_height_chunk,sz_bot+sz_height_chunk], color=pl_white, linewidth=2, alpha=alpha_val,zorder=2)
+    ax2.plot([-8.5/12,8.5/12], [sz_bot+2*sz_height_chunk,sz_bot+2*sz_height_chunk], color=pl_white, linewidth=2, alpha=alpha_val,zorder=2)
+    ax2.axvline(8.5/36, ymin=(sz_bot-y_bot+0.025)/(y_lim-y_bot-1), ymax=(sz_top-y_bot-0.025)/(y_lim-y_bot-1), color=pl_white, linewidth=3, alpha=alpha_val,zorder=2)
+    ax2.axvline(-8.5/36, ymin=(sz_bot-y_bot+0.025)/(y_lim-y_bot-1), ymax=(sz_top-y_bot-0.025)/(y_lim-y_bot-1), color=pl_white, linewidth=3, alpha=alpha_val,zorder=2)
     
     # Outer Strike Zone
-    zone_outline_shadow = plt.Rectangle((-10/12, sz_bot), 20/12, 2,
+    zone_outline_shadow = plt.Rectangle((-8.5/12, sz_bot), 17/12, 21/12,
                                  color=pl_background,fill=False,alpha=alpha_val, linewidth=3,zorder=1)
     ax2.add_patch(zone_outline_shadow)
-    zone_outline = plt.Rectangle((-10/12, sz_bot), 20/12, 2, color=pl_white,fill=False,linewidth=2,alpha=alpha_val)
+    zone_outline = plt.Rectangle((-8.5/12, sz_bot), 17/12, 21/12, color=pl_white,fill=False,linewidth=2,alpha=alpha_val)
     ax2.add_patch(zone_outline)
     
     # Plate
@@ -1946,20 +1946,20 @@ def generate_chart(pitcher_id,game_id,game_df,game_group,szn_df,szn_comp,prev_se
     
     ax3 = fig.add_axes([0.7225,0.275,0.2675,0.287], anchor='SW', zorder=1)
     # Inner Strike zone
-    ax3.plot([-9.5/12,9.5/12], [1.5+2/3,1.5+2/3], color=pl_background, linewidth=3.5, alpha=alpha_val)
-    ax3.plot([-9.5/12,9.5/12], [1.5+4/3,1.5+4/3], color=pl_background, linewidth=3.5, alpha=alpha_val)
-    ax3.axvline(10/36, ymin=(sz_bot-y_bot+0.05)/(y_lim-1-y_bot), ymax=(sz_top-y_bot-0.05)/(y_lim-1-y_bot), color=pl_background, linewidth=3.5, alpha=alpha_val)
-    ax3.axvline(-10/36, ymin=(sz_bot-y_bot+0.05)/(y_lim-1-y_bot), ymax=(sz_top-y_bot-0.05)/(y_lim-1-y_bot), color=pl_background, linewidth=3.5, alpha=alpha_val)
-    ax3.plot([-10/12,10/12], [1.5+2/3,1.5+2/3], color=pl_white, linewidth=2, alpha=alpha_val,zorder=2)
-    ax3.plot([-10/12,10/12], [1.5+4/3,1.5+4/3], color=pl_white, linewidth=2, alpha=alpha_val,zorder=2)
-    ax3.axvline(10/36, ymin=(sz_bot-y_bot)/(y_lim-1-y_bot), ymax=(sz_top-y_bot-0.025)/(y_lim-1-y_bot), color=pl_white, linewidth=3, alpha=alpha_val,zorder=2)
-    ax3.axvline(-10/36, ymin=(sz_bot-y_bot)/(y_lim-1-y_bot), ymax=(sz_top-y_bot-0.025)/(y_lim-1-y_bot), color=pl_white, linewidth=3, alpha=alpha_val,zorder=2)
+    ax3.plot([-8/12,8/12], [sz_bot+sz_height_chunk,sz_bot+sz_height_chunk], color=pl_background, linewidth=3.5, alpha=alpha_val)
+    ax3.plot([-8/12,8/12], [sz_bot+2*sz_height_chunk,sz_bot+2*sz_height_chunk], color=pl_background, linewidth=3.5, alpha=alpha_val)
+    ax3.axvline(8.5/36, ymin=(sz_bot-y_bot+0.05)/(y_lim-1-y_bot), ymax=(sz_top-y_bot-0.05)/(y_lim-1-y_bot), color=pl_background, linewidth=3.5, alpha=alpha_val)
+    ax3.axvline(-8.5/36, ymin=(sz_bot-y_bot+0.05)/(y_lim-1-y_bot), ymax=(sz_top-y_bot-0.05)/(y_lim-1-y_bot), color=pl_background, linewidth=3.5, alpha=alpha_val)
+    ax3.plot([-8.5/12,8.5/12], [sz_bot+sz_height_chunk,sz_bot+sz_height_chunk], color=pl_white, linewidth=2, alpha=alpha_val,zorder=2)
+    ax3.plot([-8.5/12,8.5/12], [sz_bot+2*sz_height_chunk,sz_bot+2*sz_height_chunk], color=pl_white, linewidth=2, alpha=alpha_val,zorder=2)
+    ax3.axvline(8.5/36, ymin=(sz_bot-y_bot+0.025)/(y_lim-1-y_bot), ymax=(sz_top-y_bot-0.025)/(y_lim-1-y_bot), color=pl_white, linewidth=3, alpha=alpha_val,zorder=2)
+    ax3.axvline(-8.5/36, ymin=(sz_bot-y_bot+0.025)/(y_lim-1-y_bot), ymax=(sz_top-y_bot-0.025)/(y_lim-1-y_bot), color=pl_white, linewidth=3, alpha=alpha_val,zorder=2)
     
     # Outer Strike Zone
-    zone_outline_shadow = plt.Rectangle((-10/12, sz_bot), 20/12, 2,
+    zone_outline_shadow = plt.Rectangle((-8.5/12, sz_bot), 17/12, 21/12,
                                  color=pl_background,fill=False,alpha=alpha_val, linewidth=3,zorder=1)
     ax3.add_patch(zone_outline_shadow)
-    zone_outline = plt.Rectangle((-10/12, sz_bot), 20/12, 2, color=pl_white,fill=False,linewidth=2,alpha=alpha_val)
+    zone_outline = plt.Rectangle((-8.5/12, sz_bot), 17/12, 21/12, color=pl_white,fill=False,linewidth=2,alpha=alpha_val)
     ax3.add_patch(zone_outline)
     
     
@@ -2125,6 +2125,7 @@ def generate_chart(pitcher_id,game_id,game_df,game_group,szn_df,szn_comp,prev_se
 
 st.write('Data (especially pitch types) are subject to change. If you get an error message, try refreshing your page. Please send any feedback to Kyle Bland, on [Bluesky](https://bsky.app/profile/blandalytics.pitcherlist.com) or [Twitter](https://x.com/blandalytics).')
 today = (datetime.now(UTC)-timedelta(hours=16)).date()
+
 if 'date' not in ss:
     ss['date'] = today
     
