@@ -1892,8 +1892,9 @@ def generate_chart(pitcher_id,game_id,game_df,game_group,szn_df,szn_comp,prev_se
     ax1.axis('off')
     sns.despine(left=True,bottom=True)
     
-    sz_bot = 1.5
-    sz_top = 3.5
+    sz_bot = (18+1.5)/12
+    sz_top = (42-1.5)/12
+    sz_height_chunk = (sz_top-sz_bot)/3
     x_ft = 2.5
     y_bot = -0.5
     y_lim = 6.5
