@@ -765,12 +765,12 @@ def get_player_heights(player_ids: List[int]) -> pd.DataFrame:
 
 model_constant_dict = {
     'stuff':{
-        'game_mean':-0.02747813136823752,
-        'type_mean':-0.028738238949820687,
-        'szn_mean':-0.028884648178475955,
-        'game_stdev':0.005869834959077604,
-        'type_stdev':0.011430978492415197,
-        'szn_stdev':0.005608963951932856
+        'game_mean':-0.0011514912884405975,
+        'type_mean':-0.0019004742179746298,
+        'szn_mean':-0.0019171661325571895,
+        'game_stdev':0.0031760383917968506,
+        'type_stdev':0.005600517799487902,
+        'szn_stdev':0.0030024034240540005
     },
     'loc':{
         'game_mean':0.02548073942085139,
@@ -802,7 +802,7 @@ pitchtype_metrics_dict = {
         'SwStr%':[-10e6,1,5.9,13,22.8,10e6],
         'CSW%':[-10e6,0,20,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.125,0.390,0.725,1.385,10e6],
-        'plvStuff+':[-10e6,80,88,105,114,10e6],
+        'plvStuff+':[-10e6,74.2,90.2,106,121,10e6],
         'PLV+':[-10e6,79,94,106,117,10e6]
         },
     'SI':{
@@ -816,7 +816,7 @@ pitchtype_metrics_dict = {
         'SwStr%':[-10e6,1,2.8,7.8,16.6,10e6],
         'CSW%':[-10e6,0,100/6,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.15,0.340,0.585,1.095,10e6],
-        'plvStuff+':[-10e6,69,74,83,95,10e6],
+        'plvStuff+':[-10e6,75.1,88,99.3,111,10e6],
         'PLV+':[-10e6,76,91,104,116,10e6]
         },
     'FC':{
@@ -830,7 +830,7 @@ pitchtype_metrics_dict = {
         'SwStr%':[-10e6,1,6.3,15,25,10e6],
         'CSW%':[-10e6,0,100/6,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.115,0.320,0.62,1.29,10e6],
-        'plvStuff+':[-10e6,90,107,115,125,10e6],
+        'plvStuff+':[-10e6,87.4,100.4,111.3,121.5,10e6],
         'PLV+':[-10e6,85,99,111,122,10e6]
         },
     'SL':{
@@ -841,7 +841,7 @@ pitchtype_metrics_dict = {
         'SwStr%':[-10e6,5,11.1,20,32,10e6],
         'CSW%':[-10e6,0,20,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.105,0.315,0.6,1.265,10e6],
-        'plvStuff+':[-10e6,95,100,110,125,10e6],
+        'plvStuff+':[-10e6,89.9,100.3,110.6,122,10e6],
         'PLV+':[-10e6,85,98,109,119,10e6]
         },
     'ST':{
@@ -852,7 +852,7 @@ pitchtype_metrics_dict = {
         'SwStr%':[-10e6,5,10,18.9,31,10e6],
         'CSW%':[-10e6,0,20,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.08,0.275,0.575,1.275,10e6],
-        'plvStuff+':[-10e6,105,111,120,130,10e6],
+        'plvStuff+':[-10e6,91.2,102.9,114.4,126.4,10e6],
         'PLV+':[-10e6,85,100,110,122,10e6]
         },
     'CU':{
@@ -863,7 +863,7 @@ pitchtype_metrics_dict = {
         'SwStr%':[-10e6,4,9.1,18.7,31.2,10e6],
         'CSW%':[-10e6,0,100/6,40,200/3,10e6],
         'xSLGcon':[-10e6,0.105,0.290,0.585,1.25,10e6],
-        'plvStuff+':[-10e6,91,100,113,125,10e6],
+        'plvStuff+':[-10e6,80.6,93.2,105.1,118.4,10e6],
         'PLV+':[-10e6,82,95,107,118,10e6]
         },
     'CH':{
@@ -874,7 +874,7 @@ pitchtype_metrics_dict = {
         'SwStr%':[-10e6,5,11.5,21,33.3,10e6],
         'CSW%':[-10e6,0,100/10,30,100/2,10e6],
         'xSLGcon':[-10e6,0.115,0.285,0.53,1.085,10e6],
-        'plvStuff+':[-10e6,100,107,115,125,10e6],
+        'plvStuff+':[-10e6,76.6,88.8,102.3,115.5,10e6],
         'PLV+':[-10e6,80,95,107,119,10e6]
         },
     'FS':{
@@ -885,51 +885,10 @@ pitchtype_metrics_dict = {
         'SwStr%':[-10e6,6,11.6,22.2,35.2,10e6],
         'CSW%':[-10e6,0,100/10,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.12,0.290,0.56,1.15,10e6],
-        'plvStuff+':[-10e6,100,107,115,125,10e6],
+        'plvStuff+':[-10e6,79.3,89.8,100.4,112.1,10e6],
         'PLV+':[-10e6,80,94,105,116,10e6]
         },
 }
-
-stuff_expectancies = {('Breaking Ball', 'ball'): 0.0648899556362042,
- ('Breaking Ball', 'called_strike'): -0.1065815321758906,
- ('Breaking Ball', 'double'): 0.7915046342126995,
- ('Breaking Ball', 'foul_strike'): -0.0415816524014541,
- ('Breaking Ball', 'hit_by_pitch'): 0.372222251590394,
- ('Breaking Ball', 'home_run'): 1.4082245958731214,
- ('Breaking Ball', 'out'): -0.2510515555787339,
- ('Breaking Ball', 'single'): 0.4831367119447007,
- ('Breaking Ball', 'swinging_strike'): -0.1104318190294043,
- ('Breaking Ball', 'triple'): 1.0624764710745118,
- ('Fastball', 'ball'): 0.0734455501653943,
- ('Fastball', 'called_strike'): -0.1015822249660868,
- ('Fastball', 'double'): 0.7752658636798753,
- ('Fastball', 'foul_strike'): -0.0462360894289398,
- ('Fastball', 'hit_by_pitch'): 0.3533658111442512,
- ('Fastball', 'home_run'): 1.3933632222762573,
- ('Fastball', 'out'): -0.2687157273447406,
- ('Fastball', 'single'): 0.4674164837545079,
- ('Fastball', 'swinging_strike'): -0.1053813621864279,
- ('Fastball', 'triple'): 1.0478652816999288,
- ('Offspeed', 'ball'): 0.0657315512840987,
- ('Offspeed', 'called_strike'): -0.110858268121292,
- ('Offspeed', 'double'): 0.7929954112089747,
- ('Offspeed', 'foul_strike'): -0.0415531830483154,
- ('Offspeed', 'hit_by_pitch'): 0.3744764552053236,
- ('Offspeed', 'home_run'): 1.4099360454039978,
- ('Offspeed', 'out'): -0.2470170992679954,
- ('Offspeed', 'single'): 0.4854555297927654,
- ('Offspeed', 'swinging_strike'): -0.1145435791680625,
- ('Offspeed', 'triple'): 1.0664637712213845,
- ('Other', 'ball'): 0.0644771188527789,
- ('Other', 'called_strike'): -0.0726561002047213,
- ('Other', 'double'): 0.7646084231502644,
- ('Other', 'foul_strike'): -0.0560926896377042,
- ('Other', 'hit_by_pitch'): 0.3404396275188116,
- ('Other', 'home_run'): 1.384199438932331,
- ('Other', 'out'): -0.2837690854680377,
- ('Other', 'single'): 0.4563555172520269,
- ('Other', 'swinging_strike'): -0.0760078083199719,
- ('Other', 'triple'): 1.0399900834408449}
 
 def pitch_models(data):
     category_feats = ['pitcherHand','hitterHand',
@@ -983,32 +942,28 @@ def pitch_models(data):
         for pitch_type in ['Fastball','Breaking Ball','Offspeed']:
             if model_df.loc[model_df['pitch_type_bucket']==pitch_type].shape[0]==0:
                 continue
-            if model_type != 'stuff':
-                # Swing Decision
-                model = xgb.XGBClassifier()
-                model.load_model(f'model_files/statcast_swing_model_{pitch_type}_{model_type}.json')
+            # Swing Decision
+            model = xgb.XGBClassifier()
+            model.load_model(f'model_files/statcast_swing_model_{pitch_type}_{model_type}.json')
 
-                model_df.loc[model_df['pitch_type_bucket']==pitch_type,['take_input','swing_input']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
+            model_df.loc[model_df['pitch_type_bucket']==pitch_type,['take_input','swing_input']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
 
-                # # Take Result
-                model = xgb.XGBClassifier()
-                model.load_model(f'model_files/statcast_take_model_{pitch_type}_{model_type}.json')
+            # # Take Result
+            model = xgb.XGBClassifier()
+            model.load_model(f'model_files/statcast_take_model_{pitch_type}_{model_type}.json')
 
-                model_df.loc[model_df['pitch_type_bucket']==pitch_type,['called_strike_raw','ball_raw','hit_by_pitch_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
-                model_df.loc[model_df['pitch_type_bucket']==pitch_type,'called_strike_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'called_strike_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'take_input'])
-                model_df.loc[model_df['pitch_type_bucket']==pitch_type,'ball_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'ball_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'take_input'])
-                model_df.loc[model_df['pitch_type_bucket']==pitch_type,'hit_by_pitch_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'hit_by_pitch_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'take_input'])
+            model_df.loc[model_df['pitch_type_bucket']==pitch_type,['called_strike_raw','ball_raw','hit_by_pitch_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
+            model_df.loc[model_df['pitch_type_bucket']==pitch_type,'called_strike_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'called_strike_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'take_input'])
+            model_df.loc[model_df['pitch_type_bucket']==pitch_type,'ball_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'ball_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'take_input'])
+            model_df.loc[model_df['pitch_type_bucket']==pitch_type,'hit_by_pitch_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'hit_by_pitch_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'take_input'])
 
             # Swing Result
             model = xgb.XGBClassifier()
             model.load_model(f'model_files/statcast_contact_model_{pitch_type}_{model_type}.json')
 
-            if model_type == 'stuff':
-                model_df.loc[model_df['pitch_type_bucket']==pitch_type,['swinging_strike_pred','contact_input']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
-            else:
-                model_df.loc[model_df['pitch_type_bucket']==pitch_type,['swinging_strike_raw','contact_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
-                model_df.loc[model_df['pitch_type_bucket']==pitch_type,'contact_input'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'contact_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'swing_input'])
-                model_df.loc[model_df['pitch_type_bucket']==pitch_type,'swinging_strike_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'swinging_strike_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'swing_input'])
+            model_df.loc[model_df['pitch_type_bucket']==pitch_type,['swinging_strike_raw','contact_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
+            model_df.loc[model_df['pitch_type_bucket']==pitch_type,'contact_input'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'contact_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'swing_input'])
+            model_df.loc[model_df['pitch_type_bucket']==pitch_type,'swinging_strike_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'swinging_strike_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'swing_input'])
 
             # Contact Result
             model = xgb.XGBClassifier()
@@ -1046,21 +1001,14 @@ def pitch_models(data):
         model_df = model_df.copy()
 
 
-        outcomes = ['swinging_strike','foul_strike','out','single','double','triple','home_run']
+        outcomes = ['ball','called_strike','hit_by_pitch','swinging_strike','foul_strike','out','single','double','triple','home_run']
 
-        if model_type == 'stuff':
-            er_per_pitch = 0
-        else:
-            outcomes += ['ball','called_strike','hit_by_pitch']
-            er_per_pitch = 0.028
+        er_per_pitch = 0.028
         std_plv_runs = 0.048
         model_df['delta_re'] = er_per_pitch
         for stat in outcomes:
             model_df[stat+'_re'] = stat if stat != 'hit_by_pitch' else 'ball' # Code HBP as Ball REs
-            if model_type !='stuff':
-                model_df[stat+'_re'] = model_df[[stat+'_re','count']].apply(tuple,axis=1).map(run_expectancies)
-            else:
-                model_df[stat+'_re'] = model_df[['pitch_type_bucket',stat+'_re']].apply(tuple,axis=1).map(stuff_expectancies)
+            model_df[stat+'_re'] = model_df[[stat+'_re','count']].apply(tuple,axis=1).map(run_expectancies)
             # model_df[stat+'_re'] = model_df[[stat+'_re','count']].apply(tuple,axis=1).map(run_expectancies)
             model_df['delta_re'] = model_df['delta_re'].add(model_df[stat+'_pred'].fillna(model_df[stat+'_pred'].median()).mul(model_df[stat+'_re']))
 
