@@ -765,12 +765,12 @@ def get_player_heights(player_ids: List[int]) -> pd.DataFrame:
 
 model_constant_dict = {
     'stuff':{
-        'game_mean':0.012631338976576149,
-        'type_mean':0.01150429770509433,
-        'szn_mean':0.011452171087832861,
-        'game_stdev':0.004330717667864958,
-        'type_stdev':0.007034899377224108,
-        'szn_stdev':0.004202608026903632
+        'game_mean':0.02915874516562125,
+        'type_mean':0.02823666558321939,
+        'szn_mean':0.028164367274107673,
+        'game_stdev':0.0035131382943262143,
+        'type_stdev':0.006092623233751169,
+        'szn_stdev':0.0034562824464582412
     },
     'loc':{
         'game_mean':0.02548073942085139,
