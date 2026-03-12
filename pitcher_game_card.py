@@ -1051,8 +1051,7 @@ def pitch_models(data):
 
 
         outcomes = ['ball','called_strike','hit_by_pitch','swinging_strike','foul_strike',
-                    'out','single','double','triple','home_run',]
-
+                    'out','single','double','triple','home_run']
         er_per_pitch = 0.028
         std_plv_runs = 0.048
         model_df['delta_re'] = er_per_pitch
@@ -1066,7 +1065,6 @@ def pitch_models(data):
         model_df[model_type+'Grade_szn'] = -((model_df['delta_re'] - model_constant_dict[model_type]['szn_mean']) / model_constant_dict[model_type]['szn_stdev']) * 10 + 75
         if model_type=='plv':
             model_df['PLV+'] = -((model_df['delta_re'] - model_constant_dict[model_type]['type_mean']) / model_constant_dict[model_type]['type_stdev']) * 15 + 100
-    
     
     counts = ['0_0', '0_1', '1_1', '1_2', '1_0', '2_2', 
               '0_2', '2_1', '3_2', '2_0','3_1', '3_0']
@@ -1132,19 +1130,21 @@ def pitch_models(data):
         for outcome in ['out', 'single', 'double', 'triple', 'home_run']:
             # Start with 50+ degrees (popups)
             model_df[outcome+'_pred'] = model_df['50+deg_pred']*bip_result_dict['50+deg'][outcome]
-        
+
             for launch_angle in ['10deg','10-20deg','20-30deg','30-40deg','40-50deg']:
                 for bucket in [launch_angle+': '+x for x in ['<90mph','90-95mph','95-100mph','100-105mph','105+mph']]:
                     model_df[outcome+'_pred'] += model_df[bucket+'_pred']*bip_result_dict[bucket][outcome]
-        model_df['count'] = count
-        model_df[f'delta_re_{count}'] = 0.028
+
+        outcomes = ['ball','called_strike','hit_by_pitch','swinging_strike','foul_strike',
+                    'out','single','double','triple','home_run']
+        er_per_pitch = 0.028
+        std_plv_runs = 0.048
+        model_df[f'delta_re_{count}'] = er_per_pitch
         for stat in outcomes:
-            model_df[stat+'_re'] = stat
-            # if model_name[:5] !='stuff':
+            model_df[stat+'_re'] = stat if stat != 'hit_by_pitch' else 'ball' # Code HBP as Ball REs
             model_df[stat+'_re'] = model_df[[stat+'_re','count']].apply(tuple,axis=1).map(run_expectancies)
-            # else:
-            #     model_df[stat+'_re'] = model_df[['pitch_type_bucket',stat+'_re']].apply(tuple,axis=1).map(stuff_expectancies)
-            model_df[f'delta_re_{count}'] = model_df['delta_re'].add(model_df[stat+'_pred'].fillna(model_df[stat+'_pred'].median()).mul(model_df[stat+'_re']))
+            # model_df[stat+'_re'] = model_df[[stat+'_re','count']].apply(tuple,axis=1).map(run_expectancies)
+            model_df[f'delta_re_{count}'] = model_df[f'delta_re_{count}'].add(model_df[stat+'_pred'].fillna(model_df[stat+'_pred'].median()).mul(model_df[stat+'_re']))
     model_df['delta_re'] = 0.028
     for pitch_type_group in ['Fastball','Breaking Ball','Offspeed']:
         model_df.loc[model_df['pitch_type_bucket']==pitch_type_group,'delta_re'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type_group,[f'delta_re_{x}' for x in counts]].mul(count_frequencies[pitch_type_group]).sum(axis=1)
