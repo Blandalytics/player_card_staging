@@ -1092,6 +1092,8 @@ def pitch_models(data):
         model_df[f'balls_before_pitch_{count[0]}'] = True
         model_df[f'strike_before_pitch_{count[-1]}'] = True
         for pitch_type in ['Fastball','Breaking Ball','Offspeed']:
+            if model_df.loc[model_df['pitch_type_bucket']==pitch_type].shape[0]==0:
+                continue
             # Swing Decision
             model = xgb.XGBClassifier()
             model.load_model(f'model_files/statcast_swing_model_{pitch_type}_{model_type}.json')
