@@ -1081,13 +1081,13 @@ def pitch_models(data):
         for pitch_type in ['Fastball','Breaking Ball','Offspeed']:
             # Swing Decision
             model = xgb.XGBClassifier()
-            model.load_model(f'statcast_swing_model_{pitch_type}_{model_type}.json')
+            model.load_model(f'model_files/statcast_swing_model_{pitch_type}_{model_type}.json')
         
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,['take_input','swing_input']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
         
             # # Take Result
             model = xgb.XGBClassifier()
-            model.load_model(f'statcast_take_model_{pitch_type}_{model_type}.json')
+            model.load_model(f'model_files/statcast_take_model_{pitch_type}_{model_type}.json')
         
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,['called_strike_raw','ball_raw','hit_by_pitch_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,'called_strike_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'called_strike_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'take_input'])
@@ -1096,7 +1096,7 @@ def pitch_models(data):
             
             # Swing Result
             model = xgb.XGBClassifier()
-            model.load_model(f'statcast_contact_model_{pitch_type}_{model_type}.json')
+            model.load_model(f'model_files/statcast_contact_model_{pitch_type}_{model_type}.json')
         
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,['swinging_strike_raw','contact_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,'contact_input'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'contact_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'swing_input'])
@@ -1104,7 +1104,7 @@ def pitch_models(data):
         
             # Contact Result
             model = xgb.XGBClassifier()
-            model.load_model(f'statcast_in_play_model_{pitch_type}_{model_type}.json')
+            model.load_model(f'model_files/statcast_in_play_model_{pitch_type}_{model_type}.json')
         
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,['foul_strike_raw','in_play_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,'foul_strike_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'foul_strike_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'contact_input'])
@@ -1112,7 +1112,7 @@ def pitch_models(data):
         
             # Launch Angle Result
             model = xgb.XGBClassifier()
-            model.load_model(f'statcast_launch_angle_model_{pitch_type}_{model_type}.json')
+            model.load_model(f'model_files/statcast_launch_angle_model_{pitch_type}_{model_type}.json')
         
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,['10deg_raw','10-20deg_raw','20-30deg_raw','30-40deg_raw','40-50deg_raw','50+deg_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
             for launch_angle in ['10deg','10-20deg','20-30deg','30-40deg','40-50deg']:
@@ -1122,7 +1122,7 @@ def pitch_models(data):
             # Launch Velo Result
             for launch_angle in ['10deg','10-20deg','20-30deg','30-40deg','40-50deg']:
                 model = xgb.XGBClassifier()
-                model.load_model(f'statcast_{launch_angle}_model_{pitch_type}_{model_type}.json')
+                model.load_model(f'model_files/statcast_{launch_angle}_model_{pitch_type}_{model_type}.json')
         
                 model_df.loc[model_df['pitch_type_bucket']==pitch_type,[launch_angle+': <90mph_raw',launch_angle+': 90-95mph_raw',launch_angle+': 95-100mph_raw',launch_angle+': 100-105mph_raw',launch_angle+': 105+mph_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
                 for bucket in [launch_angle+': '+x for x in ['<90mph','90-95mph','95-100mph','100-105mph','105+mph']]:
