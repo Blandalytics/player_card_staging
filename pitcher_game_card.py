@@ -1079,13 +1079,13 @@ def pitch_models(data):
         for pitch_type in ['Fastball','Breaking Ball','Offspeed']:
             # Swing Decision
             model = xgb.XGBClassifier()
-            model.load_model(f'model_files/statcast_swing_model_{pitch_type}_{model_type}.json')
+            model.load_model(f'model_files/statcast_swing_model_{pitch_type}_{model_name}.json')
         
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,['take_input','swing_input']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
-        
+            
             # # Take Result
             model = xgb.XGBClassifier()
-            model.load_model(f'model_files/statcast_take_model_{pitch_type}_{model_type}.json')
+            model.load_model(f'model_files/statcast_take_model_{pitch_type}_{model_name}.json')
         
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,['called_strike_raw','ball_raw','hit_by_pitch_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,'called_strike_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'called_strike_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'take_input'])
