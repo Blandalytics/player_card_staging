@@ -969,25 +969,24 @@ def pitch_models(data):
         if feat not in model_df.columns.values:
             model_df[feat] = False
 
-    model_df[['take_input','swing_input','called_strike_raw','ball_raw',
-                'hit_by_pitch_raw','swinging_strike_raw','contact_raw',
-                'foul_strike_raw','in_play_raw','10deg_raw','10-20deg_raw',
-                '20-30deg_raw','30-40deg_raw','40-50deg_raw','50+deg_raw','50+deg_pred',
-                'called_strike_pred','ball_pred','hit_by_pitch_pred','contact_input',
-                'swinging_strike_pred','foul_strike_pred','in_play_input','50+deg_pred',
-                'out_pred', 'single_pred', 'double_pred', 'triple_pred', 'home_run_pred']] = None
-
-    for launch_angle in ['10deg','10-20deg','20-30deg','30-40deg','40-50deg']:
-        model_df[[launch_angle+'_input',launch_angle+': <90mph_raw',
-                launch_angle+': 90-95mph_raw',launch_angle+': 95-100mph_raw',
-                launch_angle+': 100-105mph_raw',launch_angle+': 105+mph_raw',
-                launch_angle+': <90mph_pred',launch_angle+': 90-95mph_pred',
-                launch_angle+': 95-100mph_pred',launch_angle+': 100-105mph_pred',
-                launch_angle+': 105+mph_pred']] = None
-
     model_df = model_df.copy()
 
     for model_type in ['loc','plv']:
+        model_df[['take_input','swing_input','called_strike_raw','ball_raw',
+                    'hit_by_pitch_raw','swinging_strike_raw','contact_raw',
+                    'foul_strike_raw','in_play_raw','10deg_raw','10-20deg_raw',
+                    '20-30deg_raw','30-40deg_raw','40-50deg_raw','50+deg_raw','50+deg_pred',
+                    'called_strike_pred','ball_pred','hit_by_pitch_pred','contact_input',
+                    'swinging_strike_pred','foul_strike_pred','in_play_input','50+deg_pred',
+                    'out_pred', 'single_pred', 'double_pred', 'triple_pred', 'home_run_pred']] = None
+    
+        for launch_angle in ['10deg','10-20deg','20-30deg','30-40deg','40-50deg']:
+            model_df[[launch_angle+'_input',launch_angle+': <90mph_raw',
+                    launch_angle+': 90-95mph_raw',launch_angle+': 95-100mph_raw',
+                    launch_angle+': 100-105mph_raw',launch_angle+': 105+mph_raw',
+                    launch_angle+': <90mph_pred',launch_angle+': 90-95mph_pred',
+                    launch_angle+': 95-100mph_pred',launch_angle+': 100-105mph_pred',
+                    launch_angle+': 105+mph_pred']] = None
         for pitch_type in ['Fastball','Breaking Ball','Offspeed']:
             if model_df.loc[model_df['pitch_type_bucket']==pitch_type].shape[0]==0:
                 continue
@@ -1071,6 +1070,22 @@ def pitch_models(data):
     model_type = 'stuff'
     for count in counts:
         # model_df = model_df.copy()
+        model_df[['take_input','swing_input','called_strike_raw','ball_raw',
+                    'hit_by_pitch_raw','swinging_strike_raw','contact_raw',
+                    'foul_strike_raw','in_play_raw','10deg_raw','10-20deg_raw',
+                    '20-30deg_raw','30-40deg_raw','40-50deg_raw','50+deg_raw','50+deg_pred',
+                    'called_strike_pred','ball_pred','hit_by_pitch_pred','contact_input',
+                    'swinging_strike_pred','foul_strike_pred','in_play_input','50+deg_pred',
+                    'out_pred', 'single_pred', 'double_pred', 'triple_pred', 'home_run_pred']] = None
+    
+        for launch_angle in ['10deg','10-20deg','20-30deg','30-40deg','40-50deg']:
+            model_df[[launch_angle+'_input',launch_angle+': <90mph_raw',
+                    launch_angle+': 90-95mph_raw',launch_angle+': 95-100mph_raw',
+                    launch_angle+': 100-105mph_raw',launch_angle+': 105+mph_raw',
+                    launch_angle+': <90mph_pred',launch_angle+': 90-95mph_pred',
+                    launch_angle+': 95-100mph_pred',launch_angle+': 100-105mph_pred',
+                    launch_angle+': 105+mph_pred']] = None
+            
         model_df[['balls_before_pitch_0','balls_before_pitch_1', 'balls _before_pitch_2',
                   'balls_before_pitch_3', 'strikes_before_pitch_0','strikes_before_pitch_1', 
                   'strikes_before_pitch_2']] = False
