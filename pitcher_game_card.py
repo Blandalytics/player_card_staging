@@ -1084,7 +1084,7 @@ count_re_dict = {'0_0': 0.025951650399424236,
  '3_1': 0.027582051408480024,
  '3_2': 0.025398440235037793}
 
-def stuff_model(data,model_name='stuff'):
+def stuff_model(data,model_type='stuff'):
     category_feats = ['pitcherHand','hitterHand',
                       'balls_before_pitch','strikes_before_pitch']
     model_df = data.copy()
@@ -1148,14 +1148,14 @@ def stuff_model(data,model_name='stuff'):
                 continue
             # Swing Decision
             model = xgb.XGBClassifier()
-            model.load_model(f'model_files/statcast_swing_model_{pitch_type}_{model_name}.json')
+            model.load_model(f'model_files/statcast_swing_model_{pitch_type}_{model_type}.json')
         
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,['take_input','swing_input']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
             # print(pitch_type+' Swing model done')
         
             # # Take Result
             model = xgb.XGBClassifier()
-            model.load_model(f'model_files/statcast_take_model_{pitch_type}_{model_name}.json')
+            model.load_model(f'model_files/statcast_take_model_{pitch_type}_{model_type}.json')
         
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,['called_strike_raw','ball_raw','hit_by_pitch_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,'called_strike_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'called_strike_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'take_input'])
@@ -1165,7 +1165,7 @@ def stuff_model(data,model_name='stuff'):
             
             # Swing Result
             model = xgb.XGBClassifier()
-            model.load_model(f'model_files/statcast_contact_model_{pitch_type}_{model_name}.json')
+            model.load_model(f'model_files/statcast_contact_model_{pitch_type}_{model_type}.json')
         
             # if model_name[:5] == 'stuff':
             #     model_df.loc[model_df['pitch_type_bucket']==pitch_type,['swinging_strike_pred','contact_input']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
@@ -1177,7 +1177,7 @@ def stuff_model(data,model_name='stuff'):
         
             # Contact Result
             model = xgb.XGBClassifier()
-            model.load_model(f'model_files/statcast_in_play_model_{pitch_type}_{model_name}.json')
+            model.load_model(f'model_files/statcast_in_play_model_{pitch_type}_{model_type}.json')
         
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,['foul_strike_raw','in_play_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,'foul_strike_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'foul_strike_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'contact_input'])
@@ -1186,7 +1186,7 @@ def stuff_model(data,model_name='stuff'):
         
             # Launch Angle Result
             model = xgb.XGBClassifier()
-            model.load_model(f'model_files/statcast_launch_angle_model_{pitch_type}_{model_name}.json')
+            model.load_model(f'model_files/statcast_launch_angle_model_{pitch_type}_{model_type}.json')
         
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,['10deg_raw','10-20deg_raw','20-30deg_raw','30-40deg_raw','40-50deg_raw','50+deg_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
             for launch_angle in ['10deg','10-20deg','20-30deg','30-40deg','40-50deg']:
@@ -1197,7 +1197,7 @@ def stuff_model(data,model_name='stuff'):
             # Launch Velo Result
             for launch_angle in ['10deg','10-20deg','20-30deg','30-40deg','40-50deg']:
                 model = xgb.XGBClassifier()
-                model.load_model(f'model_files/statcast_{launch_angle}_model_{pitch_type}_{model_name}.json')
+                model.load_model(f'model_files/statcast_{launch_angle}_model_{pitch_type}_{model_type}.json')
         
                 model_df.loc[model_df['pitch_type_bucket']==pitch_type,[launch_angle+': <90mph_raw',launch_angle+': 90-95mph_raw',launch_angle+': 95-100mph_raw',launch_angle+': 100-105mph_raw',launch_angle+': 105+mph_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
                 for bucket in [launch_angle+': '+x for x in ['<90mph','90-95mph','95-100mph','100-105mph','105+mph']]:
@@ -1234,9 +1234,9 @@ def stuff_model(data,model_name='stuff'):
         model_df.loc[model_df['pitch_type_bucket']==pitch_type_group,'delta_re_str'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type_group,[f'delta_re_str_{x}' for x in counts]].mul(count_frequencies[pitch_type_group]).sum(axis=1)
         model_df.loc[model_df['pitch_type_bucket']==pitch_type_group,'delta_re_bbe'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type_group,[f'delta_re_bbe_{x}' for x in counts]].mul(count_frequencies[pitch_type_group]).sum(axis=1)
         model_df.loc[model_df['pitch_type_bucket']==pitch_type_group,'delta_re_take'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type_group,[f'delta_re_take_{x}' for x in counts]].mul(count_frequencies[pitch_type_group]).sum(axis=1)
-    model_df['plvStuff+'] = -((model_df['delta_re'] - type_mean_stuff) / type_std_stuff) * 15 + 100
-    model_df['stuffGrade_game'] = -((model_df['delta_re'] - game_mean_stuff) / game_std_stuff) * 10 + 75
-    model_df['stuffGrade_szn'] = -((model_df['delta_re'] - szn_mean_stuff) / szn_std_stuff) * 10 + 75
+    model_df['plvStuff+'] = -((model_df['delta_re'] -  model_constant_dict[model_type]['type_mean']) / model_constant_dict[model_type]['type_stdev']) * 15 + 100
+    model_df['stuffGrade_game'] = -((model_df['delta_re'] -  model_constant_dict[model_type]['game_mean']) / model_constant_dict[model_type]['game_stdev']) * 10 + 75
+    model_df['stuffGrade_szn'] = -((model_df['delta_re'] -  model_constant_dict[model_type]['szn_mean']) / model_constant_dict[model_type]['szn_stdev']) * 10 + 75
     # model_df['strStuff'] = -((model_df['delta_re_str'] - str_mean) / str_std) * 10 + 75
     # model_df['bbeStuff'] = -((model_df['delta_re_bbe'] - bbe_mean) / bbe_std) * 10 + 75
     # model_df['takeStuff'] = -((model_df['delta_re_take'] - take_mean) / take_std) * 10 + 75
