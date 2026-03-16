@@ -1166,7 +1166,7 @@ def stuff_model(data,model_type='stuff'):
     for pitch_type in ['Fastball','Breaking Ball','Offspeed']:
         # Swing Decision
         model = xgb.XGBClassifier()
-        model.load_model(f'statcast_swing_model_{pitch_type}_{model_type}.json')
+        model.load_model(f'model_files/statcast_swing_model_{pitch_type}_{model_type}.json')
     
         model_df.loc[model_df['pitch_type_bucket']==pitch_type,['take_input','swing_input']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
         # print(pitch_type+' Swing model done')
