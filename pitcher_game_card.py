@@ -1134,6 +1134,7 @@ def stuff_model(data,model_type='stuff'):
 
     # One-hot encode category columns
     model_df = pd.get_dummies(model_df, columns=category_feats)
+    model_df['count_group'] = model_df['count'].map(count_group_dict)
 
     category_feats = ['pitcherHand_L','hitterHand_L',
                       'count_group_Early','count_group_2-Str','count_group_Behind',]
