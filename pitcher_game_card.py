@@ -442,8 +442,10 @@ def pull_play(play,outside_data,base_outs,single_pitcher=True):
             pZ = None
             x0 = None
             z0 = None
+            vX0 = None
             vY0 = None
             vZ0 = None
+            aX = None
             aY = None
             aZ = None
 
