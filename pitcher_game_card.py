@@ -1120,7 +1120,7 @@ def stuff_model(data,model_type='stuff'):
     bip_result_dict = pd.read_csv('bip_dict.csv').set_index('bb_bucket').to_dict(orient='index')
 
     # run_expectancies = pd.read_csv('re_12_vals.csv').set_index(['cleaned_description','count']).to_dict()['delta_re']
-    run_expectancies = pd.read_csv('re_12_group_vals.csv').set_index(['cleaned_description','count']).to_dict()['delta_re']
+    run_expectancies = pd.read_csv('re_12_group_vals.csv').set_index(['cleaned_description','count_group']).to_dict()['delta_re']
     
     model_df['extension'] = model_df['extension'].astype('float')
     model_df['balls_before_pitch'] = model_df['balls'].copy()
