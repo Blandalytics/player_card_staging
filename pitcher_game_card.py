@@ -431,8 +431,10 @@ def pull_play(play,outside_data,base_outs,single_pitcher=True):
             pZ = pitch['pitchData']['coordinates'].get('pZ')
             x0 = pitch['pitchData']['coordinates'].get('x0')
             z0 = pitch['pitchData']['coordinates'].get('z0')
+            vX0 = pitch['pitchData']['coordinates'].get('vX0')
             vY0 = pitch['pitchData']['coordinates'].get('vY0')
             vZ0 = pitch['pitchData']['coordinates'].get('vZ0')
+            aX = pitch['pitchData']['coordinates'].get('aX')
             aY = pitch['pitchData']['coordinates'].get('aY')
             aZ = pitch['pitchData']['coordinates'].get('aZ')
         else:
@@ -490,8 +492,10 @@ def pull_play(play,outside_data,base_outs,single_pitcher=True):
                         pZ,
                         x0,
                         z0,
+                        vX0,
                         vY0,
                         vZ0,
+                        aX,
                         aY,
                         aZ,
                         exit_velo,
@@ -1360,7 +1364,7 @@ def load_data(pitcher_id,game_id,comp_year,szn_load):
                               'isPitch','pitchType','description','balls','strikes','outs',
                               'event','code','zone','sz_top','sz_bot',
                               'velo','armAngle','extension','plate_time','HB','IVB','spin_rate','spin_dir',
-                              'pX','pZ','x0','z0','vY0','vZ0','aY','aZ',
+                              'pX','pZ','x0','z0','vX0','vY0','vZ0','aX','aY','aZ',
                               'launch_speed','launch_angle','hitX','hitY'])
         .query(f'pitcherId=={pitcher_id}')
         .query('isPitch==1')
@@ -1369,7 +1373,7 @@ def load_data(pitcher_id,game_id,comp_year,szn_load):
 
     missing_feats = []
     for col in ['sz_top','sz_bot','velo','extension','plate_time',
-                'HB','IVB','spin_rate','spin_dir','pX','pZ','x0','z0','vY0','vZ0','aY','aZ']:
+                'HB','IVB','spin_rate','spin_dir','pX','pZ','x0','z0','vX0','vY0','vZ0','aX','aY','aZ']:
         if game_df[col].isna().all():
             missing_feats += [col]
 
