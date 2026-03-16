@@ -1125,6 +1125,7 @@ def stuff_model(data,model_type='stuff'):
     model_df['extension'] = model_df['extension'].astype('float')
     model_df['balls_before_pitch'] = model_df['balls'].copy()
     model_df['strikes_before_pitch'] = model_df['strikes'].copy()
+    model_df['count'] = model_df['balls'].astype('str')+'_'+model_df['strikes'].astype('str')
     count_groups = ['Early','2-Str','Behind']
     model_df['count_group'] = model_df['count'].map(count_group_dict)
 
