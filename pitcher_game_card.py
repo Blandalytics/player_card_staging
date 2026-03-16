@@ -1243,11 +1243,6 @@ def stuff_model(data,model_type='stuff'):
         # else:
         #     model_df[f'delta_re_bbe'] = model_df[f'delta_re_bbe'].add(model_df[stat+'_pred'].fillna(model_df[stat+'_pred'].median()).mul(model_df[stat+'_re']))
 
-    for pitch_type_group in ['Fastball','Breaking Ball','Offspeed']:
-        model_df.loc[model_df['pitch_type_bucket']==pitch_type_group,'delta_re'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type_group,[f'delta_re_{x}' for x in count_groups]].mul(count_frequencies[pitch_type_group]).sum(axis=1)
-        # model_df.loc[model_df['pitch_type_bucket']==pitch_type_group,'delta_re_str'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type_group,[f'delta_re_str_{x}' for x in count_groups]].mul(count_frequencies[pitch_type_group]).sum(axis=1)
-        # model_df.loc[model_df['pitch_type_bucket']==pitch_type_group,'delta_re_bbe'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type_group,[f'delta_re_bbe_{x}' for x in count_groups]].mul(count_frequencies[pitch_type_group]).sum(axis=1)
-        # model_df.loc[model_df['pitch_type_bucket']==pitch_type_group,'delta_re_take'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type_group,[f'delta_re_take_{x}' for x in count_groups]].mul(count_frequencies[pitch_type_group]).sum(axis=1)
     model_df['plvStuff+'] = -((model_df['delta_re'] -  model_constant_dict[model_type]['type_mean']) / model_constant_dict[model_type]['type_stdev']) * 15 + 100
     model_df['stuffGrade_game'] = -((model_df['delta_re'] -  model_constant_dict[model_type]['game_mean']) / model_constant_dict[model_type]['game_stdev']) * 10 + 75
     model_df['stuffGrade_szn'] = -((model_df['delta_re'] -  model_constant_dict[model_type]['szn_mean']) / model_constant_dict[model_type]['szn_stdev']) * 10 + 75
