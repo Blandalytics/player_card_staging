@@ -1291,7 +1291,8 @@ def pull_game_info(game_id):
         'P':2,
         'S':2,
         'D':2,
-        'M':2
+        'M':2,
+        'C':2
     }
     team_maps = {
         'AZ':'ARI',
