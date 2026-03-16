@@ -1541,13 +1541,13 @@ def load_data(pitcher_id,game_id,comp_year,szn_load):
             szn_df = (
                 pd.DataFrame(szn_load,
                             columns=['gameId','gameDate','playId',
-                                      'pitcherId','pitcherName','pitcherHand','pitcherHeight',
-                                      'hitterId','hitterName','hitterHand',
-                                      'isPitch','pitchType','description','balls','strikes','outs',
-                                      'event','code','zone','sz_top','sz_bot',
-                                      'velo','armAngle','extension','plate_time','HB','IVB','spin_rate','spin_dir',
-                                      'pX','pZ','x0','z0','vY0','vZ0','aY','aZ',
-                                      'launch_speed','launch_angle','hitX','hitY'])
+                              'pitcherId','pitcherName','pitcherHand','pitcherHeight',
+                              'hitterId','hitterName','hitterHand',
+                              'isPitch','pitchType','description','balls','strikes','outs',
+                              'event','code','zone','sz_top','sz_bot',
+                              'velo','armAngle','extension','plate_time','HB','IVB','spin_rate','spin_dir',
+                              'pX','pZ','x0','z0','vX0','vY0','vZ0','aX','aY','aZ',
+                              'launch_speed','launch_angle','hitX','hitY'])
                 .query('isPitch==1')
                 .drop_duplicates('playId')
                 .dropna(subset=['sz_top','sz_bot','velo','extension','plate_time','HB','IVB','spin_rate',
