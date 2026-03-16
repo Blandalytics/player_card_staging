@@ -1166,6 +1166,8 @@ def stuff_model(data,model_type='stuff'):
     std_plv_runs = 0.048
     
     for pitch_type in ['Fastball','Breaking Ball','Offspeed']:
+        if model_df.loc[model_df['pitch_type_bucket']==pitch_type].shape[0]==0:
+            continue
         # Swing Decision
         model = xgb.XGBClassifier()
         model.load_model(f'model_files/statcast_swing_model_{pitch_type}_{model_type}.json')
