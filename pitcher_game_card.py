@@ -956,8 +956,7 @@ def pitch_models(data):
     er_per_pitch = 0.028
     
     category_feats = ['pitcherHand','hitterHand',
-                      'balls_before_pitch','strikes_before_pitch',
-                      'count_group']
+                      'balls_before_pitch','strikes_before_pitch']
     model_df = data.copy()
 
     bip_result_dict = pd.read_csv('bip_dict.csv').set_index('bb_bucket').to_dict(orient='index')
