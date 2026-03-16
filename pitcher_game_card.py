@@ -1319,7 +1319,7 @@ def pull_game_info(game_id):
         home_team = team_maps[home_team]
     game_status_code = x['game_status_code']
     code_map = code_dict[game_status_code]
-    if game_status_code  in ['P','S','D']:
+    if game_status_code  in ['P','S','D','C']:
         game_info = f'{away_team} @ {home_team}: {game_time}'
         inning_sort = None
     else:
