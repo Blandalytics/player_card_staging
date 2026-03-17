@@ -1112,7 +1112,7 @@ def stuff_model(data,model_type='stuff'):
     take_outcome_dict = {'ball': 0.6813921864418319,
      'called_strike': 0.31317924315337237,
      'hit_by_pitch': 0.005428570404795775}
-    take_adj = 1/3
+    take_adj = 1/2
     
     category_feats = ['pitcherHand','hitterHand',
                       'count_group']
