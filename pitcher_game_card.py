@@ -782,12 +782,12 @@ model_constant_dict = {
         'szn_stdev':0.003168214588975428
     },
     'loc':{
-        'game_mean':0.6257489166729805,
-        'type_mean':0.6229832553123589,
-        'szn_mean':0.6255479293940167,
-        'game_stdev':0.047388282458800814,
-        'type_stdev':0.10619316615685445,
-        'szn_stdev':0.02468995730676564
+        'game_mean':0.34269935465950224,
+        'type_mean':0.3425367223212469,
+        'szn_mean':0.3427960421685915,
+        'game_stdev':0.033958120599019134,
+        'type_stdev':0.07319051215728069,
+        'szn_stdev':0.017999634445218588
     },
     'plv':{
         'game_mean':0.026026814369463608,
@@ -1063,6 +1063,10 @@ def pitch_models(data):
                 model_df.loc[model_df['pitch_type_bucket']==pitch_type,[launch_angle+': <90mph_raw',launch_angle+': 90-95mph_raw',launch_angle+': 95-100mph_raw',launch_angle+': 100-105mph_raw',launch_angle+': 105+mph_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
                 for bucket in [launch_angle+': '+x for x in ['<90mph','90-95mph','95-100mph','100-105mph','105+mph']]:
                     model_df.loc[model_df['pitch_type_bucket']==pitch_type,bucket+'_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,bucket+'_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,launch_angle+'_input'])
+                    if model_type=='loc':
+                        model_df.loc[model_df['pitch_type_bucket']==pitch_type,bucket+'_bbe'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,bucket+'_raw'].mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,launch_angle+'_raw'])
+                        if launch_angle!= '10deg':
+                            model_df.loc[model_df['pitch_type_bucket']==pitch_type,bucket+'_hh'] = np.where(bucket in [launch_angle+': '+x for x in ['95-100mph','100-105mph','105+mph']],model_df.loc[model_df['pitch_type_bucket']==pitch_type,bucket+'_bbe'],0)
 
         for outcome in ['out', 'single', 'double', 'triple', 'home_run']:
             # Start with 50+ degrees (popups)
@@ -1088,12 +1092,11 @@ def pitch_models(data):
             model_df[model_type+'Grade_game'] = -((model_df['delta_re'] - model_constant_dict[model_type]['game_mean']) / model_constant_dict[model_type]['game_stdev']) * 10 + 75
             model_df[model_type+'Grade_szn'] = -((model_df['delta_re'] - model_constant_dict[model_type]['szn_mean']) / model_constant_dict[model_type]['szn_stdev']) * 10 + 75
         else:
-            # model_df['xStr%'] = model_df[['called_strike_pred','swing_input']].astype('float').sum(axis=1)
-            model_df['xStr%'] = np.where((model_df.assign(pX = lambda x: np.where(x['hitterHand_L'],x['pX'].mul(-1),x['pX']))['pX'].between(-0.3,0.2)) & (model_df['sz_z'].between(0,0.3)),
-                                0.641,
-                                model_df[['called_strike_pred','swing_input']].astype('float').sum(axis=1))
-            model_df[model_type+'Grade_game'] = ((model_df['xStr%'] - model_constant_dict[model_type]['game_mean']) / model_constant_dict[model_type]['game_stdev']) * 10 + 75
-            model_df[model_type+'Grade_szn'] = ((model_df['xStr%'] - model_constant_dict[model_type]['szn_mean']) / model_constant_dict[model_type]['szn_stdev']) * 10 + 75
+            model_df['xStr%'] = model_df[['called_strike_pred','swing_input']].astype('float').sum(axis=1)
+            model_df['xICR'] = model_df[[x for x in model_df.columns.values if '_hh' in x]].sum(axis=1).astype('float')
+            model_df['xStr-ICR'] = np.clip(model_df['xStr%'].sub(model_df['xICR']),0,1)
+            model_df[model_type+'Grade_game'] = ((model_df['xStr-ICR'] - model_constant_dict[model_type]['game_mean']) / model_constant_dict[model_type]['game_stdev']) * 10 + 75
+            model_df[model_type+'Grade_szn'] = ((model_df['xStr-ICR'] - model_constant_dict[model_type]['szn_mean']) / model_constant_dict[model_type]['szn_stdev']) * 10 + 75
 
     return model_df[['locGrade_game','locGrade_szn','PLV+','plvGrade_game','plvGrade_szn']]
 
