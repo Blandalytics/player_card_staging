@@ -1088,7 +1088,10 @@ def pitch_models(data):
             model_df[model_type+'Grade_game'] = -((model_df['delta_re'] - model_constant_dict[model_type]['game_mean']) / model_constant_dict[model_type]['game_stdev']) * 10 + 75
             model_df[model_type+'Grade_szn'] = -((model_df['delta_re'] - model_constant_dict[model_type]['szn_mean']) / model_constant_dict[model_type]['szn_stdev']) * 10 + 75
         else:
-            model_df['xStr%'] = model_df[['called_strike_pred','swing_input']].astype('float').sum(axis=1)
+            # model_df['xStr%'] = model_df[['called_strike_pred','swing_input']].astype('float').sum(axis=1)
+            model_df['xStr%'] = np.where((model_df.assign(pX = lambda x: np.where(x['hitterHand_L'],x['pX'].mul(-1),x['pX']))['pX'].between(-0.3,0.2)) & (model_df['sz_z'].between(0,0.3)),
+                                0.641,
+                                model_df[['called_strike_pred','swing_input']].astype('float').sum(axis=1))
             model_df[model_type+'Grade_game'] = ((model_df['xStr%'] - model_constant_dict[model_type]['game_mean']) / model_constant_dict[model_type]['game_stdev']) * 10 + 75
             model_df[model_type+'Grade_szn'] = ((model_df['xStr%'] - model_constant_dict[model_type]['szn_mean']) / model_constant_dict[model_type]['szn_stdev']) * 10 + 75
 
