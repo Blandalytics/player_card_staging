@@ -782,12 +782,12 @@ model_constant_dict = {
         'szn_stdev':0.003168214588975428
     },
     'loc':{
-        'game_mean':0.4857213067981889,
-        'type_mean':0.48256772467965287,
-        'szn_mean':0.4859102527248391,
-        'game_stdev':0.05449500587648921,
-        'type_stdev':0.13901280566788635,
-        'szn_stdev':0.028898386951740428
+        'game_mean':0.6435378016238832,
+        'type_mean':0.6404768397534997,
+        'szn_mean':0.6434607293656375,
+        'game_stdev':0.04905665556658486,
+        'type_stdev':0.11069524095763869,
+        'szn_stdev':0.02624166756813204
     },
     'plv':{
         'game_mean':0.026026814369463608,
@@ -1088,8 +1088,9 @@ def pitch_models(data):
             model_df[model_type+'Grade_game'] = -((model_df['delta_re'] - model_constant_dict[model_type]['game_mean']) / model_constant_dict[model_type]['game_stdev']) * 10 + 75
             model_df[model_type+'Grade_szn'] = -((model_df['delta_re'] - model_constant_dict[model_type]['szn_mean']) / model_constant_dict[model_type]['szn_stdev']) * 10 + 75
         else:
-            model_df[model_type+'Grade_game'] = ((model_df['called_strike_raw'] - model_constant_dict[model_type]['game_mean']) / model_constant_dict[model_type]['game_stdev']) * 10 + 75
-            model_df[model_type+'Grade_szn'] = ((model_df['called_strike_raw'] - model_constant_dict[model_type]['szn_mean']) / model_constant_dict[model_type]['szn_stdev']) * 10 + 75
+            model_df['xStr%'] = model_df[['called_strike_pred','swing_input']].astype('float').sum(axis=1)
+            model_df[model_type+'Grade_game'] = ((model_df['xStr%'] - model_constant_dict[model_type]['game_mean']) / model_constant_dict[model_type]['game_stdev']) * 10 + 75
+            model_df[model_type+'Grade_szn'] = ((model_df['xStr%'] - model_constant_dict[model_type]['szn_mean']) / model_constant_dict[model_type]['szn_stdev']) * 10 + 75
 
     return model_df[['locGrade_game','locGrade_szn','PLV+','plvGrade_game','plvGrade_szn']]
 
