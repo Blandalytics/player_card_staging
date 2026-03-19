@@ -782,12 +782,12 @@ model_constant_dict = {
         'szn_stdev':0.003168214588975428
     },
     'loc':{
-        'game_mean':0.02548073942085139,
-        'type_mean':0.02593135122044948,
-        'szn_mean':0.02568416733608393,
-        'game_stdev':0.005903751642468741,
-        'type_stdev':0.012494648951960926,
-        'szn_stdev':0.002885174051109245
+        'game_mean':0.4857213067981889,
+        'type_mean':0.48256772467965287,
+        'szn_mean':0.4859102527248391,
+        'game_stdev':0.05449500587648921,
+        'type_stdev':0.13901280566788635,
+        'szn_stdev':0.028898386951740428
     },
     'plv':{
         'game_mean':0.026026814369463608,
@@ -811,6 +811,7 @@ pitchtype_metrics_dict = {
         'SwStr%':[-10e6,1,5.9,13,22.8,10e6],
         'CSW%':[-10e6,0,20,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.125,0.390,0.725,1.385,10e6],
+        'xStr%':[-10e6,0.383,0.488,0.583,0.674,10e6],
         'plvStuff+':[-10e6,73.5,90.3,107.3,125.5,10e6],
         'PLV+':[-10e6,79,94,106,117,10e6]
         },
@@ -825,6 +826,7 @@ pitchtype_metrics_dict = {
         'SwStr%':[-10e6,1,2.8,7.8,16.6,10e6],
         'CSW%':[-10e6,0,100/6,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.15,0.340,0.585,1.095,10e6],
+        'xStr%':[-10e6,0.403,0.516,0.621,0.722,10e6],
         'plvStuff+':[-10e6,72.5,87.6,101.7,115.9,10e6],
         'PLV+':[-10e6,76,91,104,116,10e6]
         },
@@ -839,6 +841,7 @@ pitchtype_metrics_dict = {
         'SwStr%':[-10e6,1,6.3,15,25,10e6],
         'CSW%':[-10e6,0,100/6,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.115,0.320,0.62,1.29,10e6],
+        'xStr%':[-10e6,0.344,0.467,0.575,0.686,10e6],
         'plvStuff+':[-10e6,89.5,99.1,108.3,121.4,10e6],
         'PLV+':[-10e6,85,99,111,122,10e6]
         },
@@ -850,6 +853,7 @@ pitchtype_metrics_dict = {
         'SwStr%':[-10e6,5,11.1,20,32,10e6],
         'CSW%':[-10e6,0,20,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.105,0.315,0.6,1.265,10e6],
+        'xStr%':[-10e6,0.276,0.392,0.509,0.626,10e6],
         'plvStuff+':[-10e6,92.2,100,108.3,117.9,10e6],
         'PLV+':[-10e6,85,98,109,119,10e6]
         },
@@ -861,6 +865,7 @@ pitchtype_metrics_dict = {
         'SwStr%':[-10e6,5,10,18.9,31,10e6],
         'CSW%':[-10e6,0,20,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.08,0.275,0.575,1.275,10e6],
+        'xStr%':[-10e6,0.265,0.387,0.505,0.621,10e6],
         'plvStuff+':[-10e6,91.3,101.4,110.8,119.7,10e6],
         'PLV+':[-10e6,85,100,110,122,10e6]
         },
@@ -872,6 +877,7 @@ pitchtype_metrics_dict = {
         'SwStr%':[-10e6,4,9.1,18.7,31.2,10e6],
         'CSW%':[-10e6,0,100/6,40,200/3,10e6],
         'xSLGcon':[-10e6,0.105,0.290,0.585,1.25,10e6],
+        'xStr%':[-10e6,0.245,0.362,0.485,0.606,10e6],
         'plvStuff+':[-10e6,84.8,94.7,104.2,115.3,10e6],
         'PLV+':[-10e6,82,95,107,118,10e6]
         },
@@ -883,6 +889,7 @@ pitchtype_metrics_dict = {
         'SwStr%':[-10e6,5,11.5,21,33.3,10e6],
         'CSW%':[-10e6,0,100/10,30,100/2,10e6],
         'xSLGcon':[-10e6,0.115,0.285,0.53,1.085,10e6],
+        'xStr%':[-10e6,0.210,0.331,0.453,0.573,10e6],
         'plvStuff+':[-10e6,84.1,92.6,102.3,110.8,10e6],
         'PLV+':[-10e6,80,95,107,119,10e6]
         },
@@ -894,6 +901,7 @@ pitchtype_metrics_dict = {
         'SwStr%':[-10e6,6,11.6,22.2,35.2,10e6],
         'CSW%':[-10e6,0,100/10,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.12,0.290,0.56,1.15,10e6],
+        'xStr%':[-10e6,0.179,0.293,0.421,0.545,10e6],
         'plvStuff+':[-10e6,87.0,94.6,102.7,109.9,10e6],
         'PLV+':[-10e6,80,94,105,116,10e6]
         },
@@ -1077,6 +1085,11 @@ def pitch_models(data):
         model_df[model_type+'Grade_szn'] = -((model_df['delta_re'] - model_constant_dict[model_type]['szn_mean']) / model_constant_dict[model_type]['szn_stdev']) * 10 + 75
         if model_type=='plv':
             model_df['PLV+'] = -((model_df['delta_re'] - model_constant_dict[model_type]['type_mean']) / model_constant_dict[model_type]['type_stdev']) * 15 + 100
+            model_df[model_type+'Grade_game'] = -((model_df['delta_re'] - model_constant_dict[model_type]['game_mean']) / model_constant_dict[model_type]['game_stdev']) * 10 + 75
+            model_df[model_type+'Grade_szn'] = -((model_df['delta_re'] - model_constant_dict[model_type]['szn_mean']) / model_constant_dict[model_type]['szn_stdev']) * 10 + 75
+        else:
+            model_df[model_type+'Grade_game'] = ((model_df['called_strike_raw'] - model_constant_dict[model_type]['game_mean']) / model_constant_dict[model_type]['game_stdev']) * 10 + 75
+            model_df[model_type+'Grade_szn'] = ((model_df['called_strike_raw'] - model_constant_dict[model_type]['szn_mean']) / model_constant_dict[model_type]['szn_stdev']) * 10 + 75
 
     return model_df[['locGrade_game','locGrade_szn','PLV+','plvGrade_game','plvGrade_szn']]
 
@@ -2041,7 +2054,7 @@ def generate_chart(pitcher_id,game_id,game_df,game_group,szn_df,szn_comp,prev_se
     pitch_model_ax.text(0.175,0.8,'Stuff',ha='center',va='center',fontsize=22,color=pl_line_color)
     pitch_model_ax.text(0.175,0.4,stuff_grade,ha='center',va='center',fontsize=60,color=grade_colors[stuff_grade])
     
-    pitch_model_ax.text(0.5,0.8,'Locations',ha='center',va='center',fontsize=20,color=pl_line_color)
+    pitch_model_ax.text(0.5,0.8,'Control',ha='center',va='center',fontsize=20,color=pl_line_color)
     pitch_model_ax.text(0.5,0.4,location_grade,ha='center',va='center',fontsize=60,color=grade_colors[location_grade])
     
     pitch_model_ax.text(0.825,0.8,'PLV',ha='center',va='center',fontsize=22,color=pl_line_color)
@@ -2231,7 +2244,7 @@ def generate_chart(pitcher_id,game_id,game_df,game_group,szn_df,szn_comp,prev_se
 
     if game_df.loc[game_df['hitterHand']=='L'].shape[0]>0:
         l_loc_ax = fig.add_axes([0.435,0.48,0.1,0.1], anchor='SW', zorder=1)
-        l_loc_ax.text(0.5,0.7,'Locations',ha='center',va='center',fontsize=15,color=pl_line_color)
+        l_loc_ax.text(0.5,0.7,'Control',ha='center',va='center',fontsize=15,color=pl_line_color)
         l_loc_ax.text(0.5,0.45,vs_l_location_grade,ha='center',va='center',fontsize=50,
                       color=grade_colors[vs_l_location_grade])
         l_loc_ax.set(xlim=(0,1),ylim=(0,1))
@@ -2240,7 +2253,7 @@ def generate_chart(pitcher_id,game_id,game_df,game_group,szn_df,szn_comp,prev_se
     if game_df.loc[game_df['hitterHand']=='R'].shape[0]>0:
         r_loc_ax = fig.add_axes([0.7125,0.48,0.1,0.1], anchor='SW', zorder=1)
         
-        r_loc_ax.text(0.5,0.7,'Locations',ha='center',va='center',fontsize=15,color=pl_line_color)
+        r_loc_ax.text(0.5,0.7,'Control',ha='center',va='center',fontsize=15,color=pl_line_color)
         r_loc_ax.text(0.5,0.45,vs_r_location_grade,ha='center',va='center',fontsize=50,
                       color=grade_colors[vs_r_location_grade])
         r_loc_ax.set(xlim=(0,1),ylim=(0,1))
