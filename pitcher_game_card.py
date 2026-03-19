@@ -1094,7 +1094,7 @@ def pitch_models(data):
         else:
             model_df['xStr%'] = model_df[['called_strike_pred','swing_input']].astype('float').sum(axis=1)
             model_df['xICR'] = model_df[[x for x in model_df.columns.values if '_hh' in x]].sum(axis=1).astype('float')
-            model_df['xStr-ICR'] = np.clip(model_df['xStr%'].sub(model_df['xICR']),0,1)
+            model_df['xStr-ICR'] = np.clip(model_df['xStr%'].sub(model_df['xICR'].mul(2)),0,1)
             model_df[model_type+'Grade_game'] = ((model_df['xStr-ICR'] - model_constant_dict[model_type]['game_mean']) / model_constant_dict[model_type]['game_stdev']) * 10 + 75
             model_df[model_type+'Grade_szn'] = ((model_df['xStr-ICR'] - model_constant_dict[model_type]['szn_mean']) / model_constant_dict[model_type]['szn_stdev']) * 10 + 75
 
