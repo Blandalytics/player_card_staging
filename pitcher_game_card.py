@@ -1132,7 +1132,7 @@ def stuff_model(data,model_type='stuff'):
     take_outcome_dict = {'ball': 0.6813921864418319,
      'called_strike': 0.31317924315337237,
      'hit_by_pitch': 0.005428570404795775}
-    take_adj = 1/2
+    take_adj = 0
     
     category_feats = ['pitcherHand','hitterHand',
                       'count_group']
@@ -1251,7 +1251,7 @@ def stuff_model(data,model_type='stuff'):
             for bucket in [launch_angle+': '+x for x in ['<90mph','90-95mph','95-100mph','100-105mph','105+mph']]:
                 model_df[outcome+'_pred'] += model_df[bucket+'_pred']*bip_result_dict[bucket][outcome]
     # model_df['count_group'] = count
-    model_df[f'delta_re'] = 0
+    model_df[f'delta_re'] = er_per_pitch
     model_df[f'delta_re_str'] = 0 # Value of Strikes on Swings
     model_df[f'delta_re_bbe'] = 0 # Batted Ball Value
     model_df[f'delta_re_take'] = 0 # Take Value
