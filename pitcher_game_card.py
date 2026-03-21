@@ -1179,7 +1179,8 @@ def stuff_model(data,model_type='stuff'):
                  launch_angle+': 95-100mph_pred',launch_angle+': 100-105mph_pred',
                  launch_angle+': 105+mph_pred']] = None
     
-    outcomes = ['ball','called_strike','hit_by_pitch','swinging_strike','foul_strike',
+    outcomes = ['ball','called_strike',#'hit_by_pitch',
+                'swinging_strike','foul_strike',
                 'out','single','double','triple','home_run',]
     
     er_per_pitch = 0.028
