@@ -1200,10 +1200,10 @@ def stuff_model(data,model_type='stuff'):
         model = xgb.XGBClassifier()
         model.load_model(f'model_files/statcast_take_model_{pitch_type}_{model_type}.json')
     
-        model_df.loc[model_df['pitch_type_bucket']==pitch_type,['called_strike_raw','ball_raw','hit_by_pitch_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
+        model_df.loc[model_df['pitch_type_bucket']==pitch_type,['called_strike_raw','ball_raw']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
         model_df.loc[model_df['pitch_type_bucket']==pitch_type,'called_strike_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'called_strike_raw'].add(take_outcome_dict['called_strike'] * take_adj).div(1+take_adj).mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'take_input'])
         model_df.loc[model_df['pitch_type_bucket']==pitch_type,'ball_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'ball_raw'].add(take_outcome_dict['ball'] * take_adj).div(1+take_adj).mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'take_input'])
-        model_df.loc[model_df['pitch_type_bucket']==pitch_type,'hit_by_pitch_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'hit_by_pitch_raw'].add(take_outcome_dict['hit_by_pitch'] * take_adj).div(1+take_adj).mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'take_input'])
+        # model_df.loc[model_df['pitch_type_bucket']==pitch_type,'hit_by_pitch_pred'] = model_df.loc[model_df['pitch_type_bucket']==pitch_type,'hit_by_pitch_raw'].add(take_outcome_dict['hit_by_pitch'] * take_adj).div(1+take_adj).mul(model_df.loc[model_df['pitch_type_bucket']==pitch_type,'take_input'])
         # print(pitch_type+' Take model done')
         
         # Swing Result
