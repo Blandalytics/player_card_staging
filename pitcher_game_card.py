@@ -774,12 +774,12 @@ def get_player_heights(player_ids: List[int]) -> pd.DataFrame:
 
 model_constant_dict = {
     'stuff':{
-        'game_mean':-0.0006401360187449481,
-        'type_mean':-0.0010694206298791052,
-        'szn_mean':-0.0008634972601727673,
-        'game_stdev':0.004332218257652707,
-        'type_stdev':0.008089328037768016,
-        'szn_stdev':0.003168214588975428
+        'game_mean':0.012589475320209209,
+        'type_mean':0.012021799207040305,
+        'szn_mean':0.01249612648714798,
+        'game_stdev':0.003742805575391544,
+        'type_stdev':0.006844184211242549,
+        'szn_stdev':0.002834269892067559
     },
     'loc':{
         'game_mean':0.34269935465950224,
@@ -812,7 +812,7 @@ pitchtype_metrics_dict = {
         'CSW%':[-10e6,0,20,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.125,0.390,0.725,1.385,10e6],
         'xStr-ICR':[-10e6,0.226,0.284,0.337,0.390,10e6],
-        'plvStuff+':[-10e6,73.5,90.3,107.3,125.5,10e6],
+        'plvStuff+':[-10e6,70.0,89.6,107.9,125.4,10e6],
         'PLV+':[-10e6,79,94,106,117,10e6]
         },
     'SI':{
@@ -827,7 +827,7 @@ pitchtype_metrics_dict = {
         'CSW%':[-10e6,0,100/6,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.15,0.340,0.585,1.095,10e6],
         'xStr-ICR':[-10e6,0.270,0.330,0.389,0.447,10e6],
-        'plvStuff+':[-10e6,72.5,87.6,101.7,115.9,10e6],
+        'plvStuff+':[-10e6,69.4,86.3,101.8,111.8,10e6],
         'PLV+':[-10e6,76,91,104,116,10e6]
         },
     'FC':{
@@ -842,7 +842,7 @@ pitchtype_metrics_dict = {
         'CSW%':[-10e6,0,100/6,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.115,0.320,0.62,1.29,10e6],
         'xStr-ICR':[-10e6,0.238,0.304,0.375,0.442,10e6],
-        'plvStuff+':[-10e6,89.5,99.1,108.3,121.4,10e6],
+        'plvStuff+':[-10e6,90.3,99.9,112.5,125.4,10e6],
         'PLV+':[-10e6,85,99,111,122,10e6]
         },
     'SL':{
@@ -854,7 +854,7 @@ pitchtype_metrics_dict = {
         'CSW%':[-10e6,0,20,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.105,0.315,0.6,1.265,10e6],
         'xStr-ICR':[-10e6,0.281,0.340,0.395,0.449,10e6],
-        'plvStuff+':[-10e6,92.2,100,108.3,117.9,10e6],
+        'plvStuff+':[-10e6,89.0,99.0,108.4,118.4,10e6],
         'PLV+':[-10e6,85,98,109,119,10e6]
         },
     'ST':{
@@ -866,7 +866,7 @@ pitchtype_metrics_dict = {
         'CSW%':[-10e6,0,20,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.08,0.275,0.575,1.275,10e6],
         'xStr-ICR':[-10e6,0.277,0.338,0.392,0.447,10e6],
-        'plvStuff+':[-10e6,91.3,101.4,110.8,119.7,10e6],
+        'plvStuff+':[-10e6,93,103.6,113.8,123.4,10e6],
         'PLV+':[-10e6,85,100,110,122,10e6]
         },
     'CU':{
@@ -878,7 +878,7 @@ pitchtype_metrics_dict = {
         'CSW%':[-10e6,0,100/6,40,200/3,10e6],
         'xSLGcon':[-10e6,0.105,0.290,0.585,1.25,10e6],
         'xStr-ICR':[-10e6,0.241,0.309,0.366,0.420,10e6],
-        'plvStuff+':[-10e6,84.8,94.7,104.2,115.3,10e6],
+        'plvStuff+':[-10e6,86.2,97.7,107.7,117.1,10e6],
         'PLV+':[-10e6,82,95,107,118,10e6]
         },
     'CH':{
@@ -890,7 +890,7 @@ pitchtype_metrics_dict = {
         'CSW%':[-10e6,0,100/10,30,100/2,10e6],
         'xSLGcon':[-10e6,0.115,0.285,0.53,1.085,10e6],
         'xStr-ICR':[-10e6,0.289,0.358,0.424,0.486,10e6],
-        'plvStuff+':[-10e6,84.1,92.6,102.3,110.8,10e6],
+        'plvStuff+':[-10e6,81.3,91.2,101.3,111.2,10e6],
         'PLV+':[-10e6,80,95,107,119,10e6]
         },
     'FS':{
@@ -902,7 +902,7 @@ pitchtype_metrics_dict = {
         'CSW%':[-10e6,0,100/10,100/3,100/2,10e6],
         'xSLGcon':[-10e6,0.12,0.290,0.56,1.15,10e6],
         'xStr-ICR':[-10e6,0.271,0.342,0.408,0.464,10e6],
-        'plvStuff+':[-10e6,87.0,94.6,102.7,109.9,10e6],
+        'plvStuff+':[-10e6,83.3,93.1,101.4,109.1,10e6],
         'PLV+':[-10e6,80,94,105,116,10e6]
         },
 }
@@ -1132,7 +1132,7 @@ def stuff_model(data,model_type='stuff'):
     take_outcome_dict = {'ball': 0.6813921864418319,
      'called_strike': 0.31317924315337237,
      'hit_by_pitch': 0.005428570404795775}
-    take_adj = 1/2
+    take_adj = 0
     
     category_feats = ['pitcherHand','hitterHand',
                       'count_group']
@@ -1251,7 +1251,7 @@ def stuff_model(data,model_type='stuff'):
             for bucket in [launch_angle+': '+x for x in ['<90mph','90-95mph','95-100mph','100-105mph','105+mph']]:
                 model_df[outcome+'_pred'] += model_df[bucket+'_pred']*bip_result_dict[bucket][outcome]
     # model_df['count_group'] = count
-    model_df[f'delta_re'] = 0
+    model_df[f'delta_re'] = er_per_pitch
     model_df[f'delta_re_str'] = 0 # Value of Strikes on Swings
     model_df[f'delta_re_bbe'] = 0 # Batted Ball Value
     model_df[f'delta_re_take'] = 0 # Take Value
