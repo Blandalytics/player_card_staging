@@ -1019,6 +1019,10 @@ def pitch_models(data):
             model = xgb.XGBClassifier()
             model.load_model(f'model_files/statcast_swing_model_{pitch_type}_{model_type}.json')
 
+            for feature in model.feature_names_in_:
+                if feature not in list(model_df.columns.values):
+                    continue
+
             model_df.loc[model_df['pitch_type_bucket']==pitch_type,['take_input','swing_input']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
 
             # # Take Result
@@ -1192,6 +1196,10 @@ def stuff_model(data,model_type='stuff'):
         # Swing Decision
         model = xgb.XGBClassifier()
         model.load_model(f'model_files/statcast_swing_model_{pitch_type}_{model_type}.json')
+
+        for feature in model.feature_names_in_:
+            if feature not in list(model_df.columns.values):
+                continue
     
         model_df.loc[model_df['pitch_type_bucket']==pitch_type,['take_input','swing_input']] = model.predict_proba(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
         # print(pitch_type+' Swing model done')
