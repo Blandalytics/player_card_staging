@@ -1159,6 +1159,7 @@ def stuff_model(data,model_type='stuff'):
     for feat in category_feats:
         if feat not in model_df.columns.values:
             model_df[feat] = False
+    
     model_df[category_feats] = model_df[category_feats].astype('category')
     
     for pitch_type in ['Fastball','Breaking Ball','Offspeed']:
