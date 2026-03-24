@@ -1171,9 +1171,9 @@ def stuff_model(data):
     
         model_df.loc[model_df['pitch_type_bucket']==pitch_type,'delta_re'] = model.predict(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
 
-    model_df['plvStuff+'] = -((model_df['delta_re'] -  model_constant_dict[model_type]['type_mean']) / model_constant_dict[model_type]['type_stdev']) * 15 + 100
-    model_df['stuffGrade_game'] = -((model_df['delta_re'] -  model_constant_dict[model_type]['game_mean']) / model_constant_dict[model_type]['game_stdev']) * 10 + 75
-    model_df['stuffGrade_szn'] = -((model_df['delta_re'] -  model_constant_dict[model_type]['szn_mean']) / model_constant_dict[model_type]['szn_stdev']) * 10 + 75
+    model_df['plvStuff+'] = -((model_df['delta_re'] -  model_constant_dict['stuff']['type_mean']) / model_constant_dict['stuff']['type_stdev']) * 15 + 100
+    model_df['stuffGrade_game'] = -((model_df['delta_re'] -  model_constant_dict['stuff']['game_mean']) / model_constant_dict['stuff']['game_stdev']) * 10 + 75
+    model_df['stuffGrade_szn'] = -((model_df['delta_re'] -  model_constant_dict['stuff']['szn_mean']) / model_constant_dict['stuff']['szn_stdev']) * 10 + 75
     return model_df[['plvStuff+','stuffGrade_game','stuffGrade_szn']].astype('float')
 
 ### Standardized Strikezone (z-location, in 'strikezones')
