@@ -1159,12 +1159,13 @@ def stuff_model(data,model_type='stuff'):
     for feat in category_feats:
         if feat not in model_df.columns.values:
             model_df[feat] = False
+    model_df[category_feats] = model_df[category_feats].astype('category')
     
     for pitch_type in ['Fastball','Breaking Ball','Offspeed']:
         if model_df.loc[model_df['pitch_type_bucket']==pitch_type].shape[0]==0:
             continue
         # Swing Decision
-        model = xgb.XGBRegressor()
+        model = xgb.XGBRegressor(enable_categorical=True)
         model.load_model(f'model_files/statcast_{pitch_type}_stuff_model.json')
     
         model_df.loc[model_df['pitch_type_bucket']==pitch_type,'delta_re'] = model.predict(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
