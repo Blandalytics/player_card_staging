@@ -21,7 +21,7 @@ import io
 import time
 import tqdm
 import xgboost as xgb
-from xgboost import XGBClassifier
+from xgboost import XGBClassifier, XGBRegressor
 from io import BytesIO
 from pyfonts import set_default_font, load_google_font
 from typing import List
