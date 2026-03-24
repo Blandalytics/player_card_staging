@@ -1165,7 +1165,7 @@ def stuff_model(data,model_type='stuff'):
         if model_df.loc[model_df['pitch_type_bucket']==pitch_type].shape[0]==0:
             continue
         # Swing Decision
-        model = xgb.XGBRegressor(enable_categorical=True)
+        model = xgb.XGBRegressor()
         model.load_model(f'model_files/statcast_{pitch_type}_stuff_model.json')
     
         model_df.loc[model_df['pitch_type_bucket']==pitch_type,'delta_re'] = model.predict(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
