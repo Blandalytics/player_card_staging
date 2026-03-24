@@ -1328,7 +1328,7 @@ def load_data(pitcher_id,game_id,comp_year,szn_load):
         game_df['IVB_acc'] = game_df['IVB'].div(game_df['plate_time']**2)
         game_df['Break_acc'] = (game_df['HB_acc'].astype('float')**2+game_df['IVB_acc'].astype('float')**2)**0.5
         
-        game_df['adj_x0'] = np.where(game_df['pitcherHand_L'],game_df['x0'],game_df['x0'].mul(-1))
+        game_df['adj_x0'] = np.where(game_df['pitcherHand']=='L',game_df['x0'],game_df['x0'].mul(-1))
         
         game_df['adj_spin_dir'] = np.where(game_df['pitcherHand']=='L',game_df['spin_dir'],360-game_df['spin_dir'])
         game_df['obs_dir'] = (np.rad2deg(np.arctan2(game_df['IVB_acc'],game_df['HB_acc'])) + 90)%360
