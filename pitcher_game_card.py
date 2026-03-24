@@ -1133,8 +1133,7 @@ count_group_dict = {
 }
 
 def stuff_model(data,model_type='stuff'):
-    category_feats = ['pitcherHand','hitterHand',
-                      'count_group']
+    category_feats = ['pitcherHand','hitterHand']
     model_df = data.copy()
 
     bip_result_dict = pd.read_csv('bip_dict.csv').set_index('bb_bucket').to_dict(orient='index')
