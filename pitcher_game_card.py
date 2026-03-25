@@ -340,8 +340,25 @@ def szn_games(player_id,game_id,season=None,sport_id=1):
     game_ids = [x['game']['gamePk'] for x in response['people'][0]['stats'][0]['splits']]
     return game_ids
 
-def approach_angles(dataframe):
-    ## Physical characteristics of pitch
+def pitch_angles(dataframe):
+    ### Physical characteristics of pitch
+    ## Release Angles
+
+    # Release Speed
+    dataframe['vYs'] = -((dataframe['vY0']**2 - 2 * dataframe['aY'] * (60.5 - dataframe['extension'] - 50)) ** 0.5)
+
+    # Time to plate, from start
+    dataframe['pitch_time_start'] = (dataframe['vYs'] - dataframe['vY0'])/dataframe['aY']
+
+    # Release speed, X- and Z-directions
+    dataframe['vXs'] = dataframe['vX0'] - dataframe['aX'] * dataframe['pitch_time_start']
+    dataframe['vZs'] = dataframe['vZ0'] - dataframe['aZ'] * dataframe['pitch_time_start']
+
+    # Release Angles, Horizontal, and Vertical
+    dataframe['HRA'] = -1 * np.arctan(dataframe['vXs']/dataframe['vYs']) * (180/np.pi)
+    dataframe['VRA'] = -1 * np.arctan(dataframe['vZs']/dataframe['vYs']) * (180/np.pi)
+    
+    
     # Pitch velocity (to plate) at plate
     dataframe['vYf'] = -1 * (dataframe['vY0']**2 - (2 * dataframe['aY']*(50-17/12)))**0.5
     # Pitch time in air (50ft to home plate)
@@ -349,12 +366,12 @@ def approach_angles(dataframe):
     # Pitch velocity (vertical) at plate
     dataframe['vXf'] = dataframe['vX0'] + dataframe['aX'] * dataframe['pitch_time_50ft']
     dataframe['vZf'] = dataframe['vZ0'] + dataframe['aZ'] * dataframe['pitch_time_50ft']
-
+    
     ## raw and height-adjusted VAA
-    # Raw HAA
-    dataframe['raw_haa'] = -1 * np.arctan(dataframe['vXf']/dataframe['vYf']) * (180/np.pi)
     # Raw VAA
     dataframe['raw_vaa'] = -1 * np.arctan(dataframe['vZf']/dataframe['vYf']) * (180/np.pi)
+    # Raw HAA
+    dataframe['raw_haa'] = -1 * np.arctan(dataframe['vXf']/dataframe['vYf']) * (180/np.pi)
     # VAA of all pitches at that height
     # dataframe['vaa_z_adj'] = dataframe['raw_vaa'].groupby([dataframe['p_z'],dataframe['year_played']]).transform('mean')
     dataframe['vaa_z_adj'] = np.where(dataframe['pZ']<3.5,
@@ -363,7 +380,7 @@ def approach_angles(dataframe):
     # Adjusted VAA, based on height
     dataframe['adj_vaa'] = dataframe['raw_vaa'].sub(dataframe['vaa_z_adj'])
 
-    return dataframe[['raw_haa','raw_vaa','adj_vaa']]
+    return dataframe[['HRA','VRA','raw_haa','raw_vaa','adj_vaa']]
 
 def pull_play(play,outside_data,base_outs,single_pitcher=True):
     game_pitcher_id = play['matchup']['pitcher']['id']
@@ -774,12 +791,12 @@ def get_player_heights(player_ids: List[int]) -> pd.DataFrame:
 
 model_constant_dict = {
     'stuff':{
-        'game_mean':-0.0014523832,
-        'type_mean':-0.0019093237,
-        'szn_mean':-0.0018723675,
-        'game_stdev':0.0056869136,
-        'type_stdev':0.010542878,
-        'szn_stdev':0.003844562
+        'game_mean':-0.0013846938,
+        'type_mean':-0.0018265606,
+        'szn_mean':-0.0017466402,
+        'game_stdev':0.0051059783,
+        'type_stdev':0.009336146,
+        'szn_stdev':0.0035983413
     },
     'loc':{
         'game_mean':0.34269935465950224,
@@ -1162,14 +1179,14 @@ def stuff_model(data):
     
     # model_df[category_feats] = model_df[category_feats].astype('category')
     
-    for pitch_type in ['Fastball','Breaking Ball','Offspeed']:
-        if model_df.loc[model_df['pitch_type_bucket']==pitch_type].shape[0]==0:
-            continue
-        # Swing Decision
-        model = xgb.XGBRegressor()
-        model.load_model(f'model_files/statcast_{pitch_type}_stuff_model.json')
-    
-        model_df.loc[model_df['pitch_type_bucket']==pitch_type,'delta_re'] = model.predict(model_df.loc[model_df['pitch_type_bucket']==pitch_type,model.feature_names_in_])
+    # for pitch_type in ['Fastball','Breaking Ball','Offspeed']:
+    # if model_df.loc[model_df['pitch_type_bucket']==pitch_type].shape[0]==0:
+    #     continue
+    # Swing Decision
+    model = xgb.XGBRegressor()
+    model.load_model(f'model_files/statcast_stuff_model.json')
+
+    model_df['delta_re'] = model.predict(model_df[model.feature_names_in_])
 
     model_df['plvStuff+'] = np.clip(-((model_df['delta_re'] -  model_constant_dict['stuff']['type_mean']) / model_constant_dict['stuff']['type_stdev']) * 15 + 100,0,300)
     model_df['stuffGrade_game'] = -((model_df['delta_re'] -  model_constant_dict['stuff']['game_mean']) / model_constant_dict['stuff']['game_stdev']) * 10 + 75
@@ -1319,7 +1336,7 @@ def load_data(pitcher_id,game_id,comp_year,szn_load):
         game_df[['sz_z','sz_plot_z']] = strikezone_z(game_df,'sz_top','sz_bot')
         game_df['balls'] = np.clip(game_df['balls'],0,3)
         game_df['strikes'] = np.clip(game_df['strikes'],0,2)
-        game_df[['HAA','VAA','HAVAA']] = approach_angles(game_df[['pZ','vX0','vY0','vZ0','aX','aY','aZ']].astype('float'))
+        game_df[['HRA','VRA','HAA','VAA','HAVAA']] = pitch_angles(game_df[['extension','pZ','vX0','vY0','vZ0','aX','aY','aZ']].astype('float'))
         game_df['usage'] = game_df['isPitch'].groupby([game_df['pitcherId'],game_df['gameId'],game_df['pitchType']]).transform('count') / game_df['isPitch'].groupby([game_df['pitcherId'],game_df['gameId']]).transform('count')
         game_df['vRHH'] = np.where(game_df['hitterHand']=='R',1,None)
         game_df['vLHH'] = np.where(game_df['hitterHand']=='L',1,None)
