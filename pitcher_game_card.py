@@ -1193,10 +1193,9 @@ def stuff_model(data):
     take_adj = 1/4
     
     model_df[f'delta_re'] = er_per_pitch
-    if model_name[:5]=='stuff':
-        model_df[f'delta_re_str'] = 0 # Value of Strikes on Swings
-        model_df[f'delta_re_bbe'] = 0 # Batted Ball Value
-        model_df[f'delta_re_take'] = 0 # Take Value
+    model_df[f'delta_re_str'] = 0 # Value of Strikes on Swings
+    model_df[f'delta_re_bbe'] = 0 # Batted Ball Value
+    model_df[f'delta_re_take'] = 0 # Take Value
     model_df['count_group'] = model_df['count'].map(count_group_dict)
     # model_df['count_group'] = np.where(model_df['count'].isin(['0_2','1_2','2_2','3_2']),'two_strike','other')
     
