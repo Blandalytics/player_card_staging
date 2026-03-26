@@ -1613,7 +1613,7 @@ def load_data(pitcher_id,game_id,comp_year,szn_load):
                 .assign(chase = lambda x: np.where((x['zone']==1),None,x['swing']),
                         whiff = lambda x: np.where((x['swing']==1),x['sw_str'],None))
                 )
-            szn_df[['HAA','VAA','HAVAA']] = approach_angles(szn_df[['pZ','vX0','vY0','vZ0','aX','aY','aZ']].astype('float'))
+            szn_df[['HRA','VRA','HAA','VAA','HAVAA']] = pitch_angles(szn_df[['extension','pZ','vX0','vY0','vZ0','aX','aY','aZ']].astype('float'))
             szn_df['HB_acc'] = szn_df['HB'].div(szn_df['plate_time']**2)
             szn_df['IVB_acc'] = szn_df['IVB'].div(szn_df['plate_time']**2)
             szn_df['game_plate_time'] = szn_df['pitchType'].map(game_plate_times)
